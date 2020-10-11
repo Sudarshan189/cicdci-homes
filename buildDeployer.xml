@@ -20,7 +20,7 @@
 	<!-- XSLT for the Deployer Project Specification - adding Repository and Project Sections -->
 	<property name="initialXSLT" value="resources/setUpInitial.xslt"/>
 	
-	<target name="deployWM" description="main deploy task" depends="startDeployment, initPAandDeployerWindows, initPAandDeployerUnix, createDeployerSpec,execProjectAutomator,triggerDeploy<!--,triggerSimulation,triggerCheckpoint-->">
+	<target name="deployWM" description="main deploy task" depends="startDeployment, initPAandDeployerWindows, initPAandDeployerUnix, createDeployerSpec,execProjectAutomator,triggerDeploy">
 	</target>
 
 	<target name="startDeployment">		
@@ -105,7 +105,7 @@
 		</if>		
 	</target>
 	
-	<target name="triggerDeploy" <!----- depends="triggerSimulation,triggerCheckpoint" -----> >
+	<target name="triggerDeploy" depends="triggerSimulation,triggerCheckpoint">
 		<exec executable="${deployerInstallationPath}/${deployerExecutable}" dir="${deployerInstallationPath}" failonerror="true" resultproperty="appState">
 			<arg value="--deploy"/>
 			<arg line="-project ${projectName}"/>
@@ -127,7 +127,6 @@
 			</else>
 		</if>		
 	</target>	
-	<!----- Generate Simulation Report
 	
 	<target name="triggerSimulation">
 		<exec executable="${deployerInstallationPath}/${deployerExecutable}" dir="${deployerInstallationPath}" failonerror="true" resultproperty="appState">
@@ -150,10 +149,8 @@
 			</else>
 		</if>		
 	</target>	
+
 	
-	----->
-	
-		<!----- Trigger CheckPoint Report
 	
 	<target name="triggerCheckpoint">
 		<exec executable="${deployerInstallationPath}/${deployerExecutable}" dir="${deployerInstallationPath}" failonerror="true" resultproperty="appState">
@@ -177,5 +174,4 @@
 		</if>		
 	</target>	
 	
-	----->
 </project>
