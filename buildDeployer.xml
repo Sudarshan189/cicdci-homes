@@ -77,7 +77,8 @@
 			<!-- general props -->
 			<param name="repoName" expression="${repositoryName}" />
 			<param name="repoPath" expression="${buildOutputDir}" />
-			<param name="projectName" expression="${projectName}" />				
+			<param name="projectName" expression="${projectName}" />
+			<param name="autoResolve" expression="${autoResolve}" />	
 		</xslt>				
 	</target>
 	

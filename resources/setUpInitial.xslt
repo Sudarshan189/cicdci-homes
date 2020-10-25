@@ -35,7 +35,7 @@
 	<xsl:param name="repoName"/>
 	<xsl:param name="repoPath"/>
 	<xsl:param name="projectName"/>
-		
+	<xsl:param name="autoResolve"/>		
 	<xsl:template match="@*|node()">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
@@ -92,6 +92,7 @@
 
 				<DeploymentSet autoResolve="ignore" description="" name="myDeploymentSet">
 				<xsl:attribute name="srcAlias"><xsl:value-of select="$repoName"/></xsl:attribute>
+				 <xsl:attribute name="autoResolve"><xsl:value-of select="$autoResolve"/></xsl:attribute>
 
 					<Composite displayName="" type="*">
 						<xsl:attribute name="srcAlias"><xsl:value-of select="$repoName"/></xsl:attribute>
