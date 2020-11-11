@@ -20,7 +20,7 @@
 	<!-- XSLT for the Deployer Project Specification - adding Repository and Project Sections -->
 	<property name="initialXSLT" value="resources/setUpInitial.xslt"/>
 	
-	<target name="deployWM" description="main deploy task" depends="startDeployment, initPAandDeployerWindows, initPAandDeployerUnix, createDeployerSpec,execProjectAutomator,triggerDeploy">
+	<target name="deployWM" description="main deploy task" depends="startDeployment, initPAandDeployerWindows, initPAandDeployerUnix, createDeployerSpec,execProjectAutomator,triggerDeploy<!--,triggerSimulation,triggerCheckpoint-->">
 	</target>
 
 	<target name="startDeployment">		
@@ -105,7 +105,7 @@
 		</if>		
 	</target>
 	
-	<target name="triggerDeploy">
+	<target name="triggerDeploy" <!----- depends="triggerSimulation,triggerCheckpoint" -----> >
 		<exec executable="${deployerInstallationPath}/${deployerExecutable}" dir="${deployerInstallationPath}" failonerror="true" resultproperty="appState">
 			<arg value="--deploy"/>
 			<arg line="-project ${projectName}"/>
@@ -127,4 +127,55 @@
 			</else>
 		</if>		
 	</target>	
+	<!----- Generate Simulation Report
+	
+	<target name="triggerSimulation">
+		<exec executable="${deployerInstallationPath}/${deployerExecutable}" dir="${deployerInstallationPath}" failonerror="true" resultproperty="appState">
+			<arg value="--simulate"/>
+			<arg line="-project ${projectName}"/>
+			<arg line="-dc myDeployment"/>
+			<arg line="-host ${deployerHost}"/>
+			<arg line="-port ${deployerPort}"/>
+			<arg line="-user ${deployerUsername}"/>
+			<arg line="-pwd ${deployerPassword}"/>
+		</exec>
+		
+		<if>			
+		<equals arg1="${appState}" arg2="0" trim="true"/>			
+			<then>
+				<echo message="Simulation is successful"/>
+			</then>
+			<else>			    				
+				<fail message="Simulation failed."/>
+			</else>
+		</if>		
+	</target>	
+	
+	----->
+	
+		<!----- Trigger CheckPoint Report
+	
+	<target name="triggerCheckpoint">
+		<exec executable="${deployerInstallationPath}/${deployerExecutable}" dir="${deployerInstallationPath}" failonerror="true" resultproperty="appState">
+			<arg value="--checkpoint"/>
+			<arg line="-project ${projectName}"/>
+			<arg line="-dc myDeployment"/>
+			<arg line="-host ${deployerHost}"/>
+			<arg line="-port ${deployerPort}"/>
+			<arg line="-user ${deployerUsername}"/>
+			<arg line="-pwd ${deployerPassword}"/>
+		</exec>
+		
+		<if>			
+		<equals arg1="${appState}" arg2="0" trim="true"/>			
+			<then>
+				<echo message="CheckPoint is successful"/>
+			</then>
+			<else>			    				
+				<fail message="CheckPoint failed."/>
+			</else>
+		</if>		
+	</target>	
+	
+	----->
 </project>
